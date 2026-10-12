@@ -60,7 +60,6 @@ public class Numbers
     }
     public static int DigitCount(int number){
         int digitCount = 0;
-        boolean cont = true;
         while(number != 0){
             digitCount++;
             number /= 10;
