@@ -28,18 +28,20 @@ public class Numbers
         }
         int digits = EvenOrOdd(digitCount, number);
         System.out.println(digits);
-        int oddSum = AddEODigits(number, digits, 1, digitCount);
+        int oddSum = AddEODigits(number, digits, 1);
         if(oddSum > 10){
             System.out.println("Jackpot!");
         } else {
             System.out.println("No luck");
         }
-        System.out.println("Odd sum: " +AddEODigits(number, digits, 1, digitCount));
-        System.out.println("Even sum: " +AddEODigits(number, digits, 0, digitCount));
-        System.out.println("Max digit: "+MaxDigit(number, digitCount));
+        System.out.println("Odd sum: " +AddEODigits(number, digits, 1));
+        System.out.println("Even sum: " +AddEODigits(number, digits, 0));
+        System.out.println("Max digit: "+MaxDigit(number));
         System.out.println(MoreEvenOrOdd(digits, digitCount));
-        System.out.println(ReverseNumber(number, digitCount));
-        if(isPalindrome(number, digitCount)){
+        System.out.println(ReverseNumber(number));
+        System.out.println(DigitalRoot(number));
+        System.out.println(EvenRemovedNumber(number, digits));
+        if(isPalindrome(number)){
             System.out.println("The number is a palindrome!");
         } else {
             System.out.println("The number is not a palindrome");
@@ -68,12 +70,11 @@ public class Numbers
     }
     public static int EvenOrOdd(int digitCount, int number){
         String digits = "";
-        int checker = 0;
         while(number >= 0){
             if(number % 2 == 0){
-                digits = digits + "0";
+                digits = "0" + digits;
             } else {
-                digits = digits + "1";
+                digits = "1" + digits;
             }
             if(number == 0){
                 number -= 1000;
@@ -82,7 +83,7 @@ public class Numbers
         }
         return Integer.parseInt(digits);
     }
-    public static int AddEODigits(int number, int digits, int checked, int digitCount){
+    public static int AddEODigits(int number, int digits, int checked){
         int sum = 0;
         int checker = 0;
         while(number != 0){
@@ -95,7 +96,7 @@ public class Numbers
         }
         return sum;
     }
-    public static int MaxDigit(int number, int digitCount){
+    public static int MaxDigit(int number){
         int maxDigit = 0;
         while(number != 0){
             if(number % 10 > maxDigit){
@@ -124,7 +125,7 @@ public class Numbers
             return "Balanced";
         }
     }
-    public static int ReverseNumber(int number, int digitCount){
+    public static int ReverseNumber(int number){
         String reversedDigit = "";
         while(number != 0){
             reversedDigit = reversedDigit + number % 10;
@@ -132,12 +133,8 @@ public class Numbers
         }
         return Integer.parseInt(reversedDigit);
     }
-    public static boolean isPalindrome(int number, int digitCount){
-        if(number == ReverseNumber(number, digitCount)){
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean isPalindrome(int number){
+        return number == ReverseNumber(number);
     }
     public static boolean isIncreasing(int number){
         while(number > 10){
@@ -148,6 +145,29 @@ public class Numbers
         }
         return true;
     }
+    public static int EvenRemovedNumber(int number, int digits){
+        String returnedNumber = "";
+        while(digits != 0){
+            if(digits % 10 == 1){
+                returnedNumber = (number % 10) + returnedNumber;
+            }
+            digits /= 10;
+            number /= 10;
+        }
+        return Integer.parseInt(returnedNumber);
+    }
+    public static int DigitalRoot(int number){
+        int sum = 0;
+        while(number != 0){
+            sum += number % 10;
+            number /= 10;
+        }
+        if(sum > 9){
+            return DigitalRoot(sum);
+        } else {
+            return sum;
+        }
+    }
     public static boolean isArmstrong(int number, int digitCount){
         int sum = 0;
         int finalNumber = number;
@@ -155,11 +175,7 @@ public class Numbers
             sum += (int)Math.pow(number % 10, digitCount);
             number /= 10;
         }
-        if(sum == finalNumber){
-            return true;
-        } else {
-            return false;
-        }
+        return sum == finalNumber;
     }
     public static int armstrongAmount(int startNum, int endNum){
         int sum = 0;
