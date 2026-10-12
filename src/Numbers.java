@@ -54,6 +54,7 @@ public class Numbers
         } else {
             System.out.println("The number is not an Armstrong number");
         }
+        System.out.println("There are "+armstrongAmount(0,number)+" Armstrong numbers between 0 and "+number);
         System.out.println();
         Cycle();
     }
@@ -160,5 +161,16 @@ public class Numbers
         } else {
             return false;
         }
+    }
+    public static int armstrongAmount(int startNum, int endNum){
+        int sum = 0;
+        int checker = startNum;
+        while(checker <= endNum){
+            if(isArmstrong(checker, DigitCount(checker))){
+                sum++;
+            }
+            checker++;
+        }
+        return sum;
     }
 }
